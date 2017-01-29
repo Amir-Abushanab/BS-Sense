@@ -187,7 +187,7 @@ def hello():
 
         # Plot and embed in ipython notebook!
         py.plot(data, layout, filename='', auto_open=False)
-#        Gauge_Printer()
+####        Gauge_Printer()
         return render_template('index.html', tweets_plus=tweets_positive, tweets_minus=tweets_negative, tweets_fact=tweets_not_subjective, tweets_unfact=tweets_subjective)
     return render_template('index.html')
 
