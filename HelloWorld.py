@@ -5,7 +5,7 @@ import plotly.plotly as py
 import plotly.graph_objs as go
 import numpy as np
 import plotly
-plotly.tools.set_credentials_file(username='MEMEMARKETER', api_key='7ootEmooYLiuUlcVhfF3')
+plotly.tools.set_credentials_file(username='lastps', api_key='cB0kWozoTEjQDZJpCUhP')
 
 
 def Gauge_Printer():
@@ -152,7 +152,22 @@ def hello():
 
         average1 = count1 / 100
         average2 = count2 / 100
-
+        if 0.0 >= average1 >= 0.2:
+            overall_subjectivity = "minimal"
+        elif 0.2 > average1 >= 0.4:
+            overall_subjectivity = "a bit of"
+        elif 0.4 > average1 >= 0.6:
+            overall_subjectivity = "a decent amount of"
+        elif 0.6> average1 >= 0.8:
+            overall_subjectivity = "a lot of"
+        elif 0.8 > average1 >= 1.0:
+            overall_subjectivity = "an unbelievable amount of"
+        if average2 > 0:
+            overall_sentiment = "negatively"
+        elif average2 <0:
+            overall_sentiment = "positively"
+        elif average2 == 0:
+            overall_sentiment = "neutral"
         trace0 = go.Scatter(
             x=sentiment_array,
             y=subjectivity_array,
@@ -184,9 +199,9 @@ def hello():
         #  f = [0.3]
         # )
         data = [trace0]
-
         # Plot and embed in ipython notebook!
-        py.plot(data, layout, filename='', auto_open=False)
+        fig = go.Figure(data=data, layout=layout)
+        py.plot(fig, filename='', auto_open=False)
 ####        Gauge_Printer()
         return render_template('index.html', tweets_plus=tweets_positive, tweets_minus=tweets_negative, tweets_fact=tweets_not_subjective, tweets_unfact=tweets_subjective)
     return render_template('index.html')
