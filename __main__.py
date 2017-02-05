@@ -3,7 +3,6 @@ import tweepy
 from textblob import TextBlob
 import plotly.plotly as py
 import plotly.graph_objs as go
-import numpy as np
 import plotly
 plotly.tools.set_credentials_file(username='lastps', api_key='cB0kWozoTEjQDZJpCUhP')
 
@@ -123,6 +122,8 @@ def hello():
         tweets_subjective = []
         tweets_positive = []
         tweets_negative = []
+        overall_sentiment = ""
+        overall_subjectivity = ""
         sentiment_array = []
         subjectivity_array = []
         count1, count2, counter_positive, counter_negative, counter_subjective, counter_objective = 0, 0, 0, 0, 0, 0
@@ -150,18 +151,14 @@ def hello():
             count1 += sent.sentiment.subjectivity
             count2 += sent.sentiment.polarity
 
-        average1 = count1 / 100
-        average2 = count2 / 100
-        if 0.0 >= average1 >= 0.2:
-            overall_subjectivity = "minimal"
-        elif 0.2 > average1 >= 0.4:
-            overall_subjectivity = "a bit of"
-        elif 0.4 > average1 >= 0.6:
-            overall_subjectivity = "a decent amount of"
-        elif 0.6> average1 >= 0.8:
-            overall_subjectivity = "a lot of"
-        elif 0.8 > average1 >= 1.0:
-            overall_subjectivity = "an unbelievable amount of"
+        average1 = count1 / 100.0
+        average2 = count2 / 100.0
+        if average1 > 0.5:
+            overall_sentiment = "a lot of "
+        elif average1 <0.5:
+            overall_sentiment = "minimal"
+        elif average1 == 0.5:
+            overall_sentiment = "a bit of"
         if average2 > 0:
             overall_sentiment = "negatively"
         elif average2 <0:
@@ -203,7 +200,7 @@ def hello():
         fig = go.Figure(data=data, layout=layout)
         py.plot(fig, filename='', auto_open=False)
 ####        Gauge_Printer()
-        return render_template('index.html', tweets_plus=tweets_positive, tweets_minus=tweets_negative, tweets_fact=tweets_not_subjective, tweets_unfact=tweets_subjective)
+        return render_template('index.html', tweets_plus=tweets_positive, tweets_minus=tweets_negative, tweets_fact=tweets_not_subjective, tweets_unfact=tweets_subjective, sub_overall=overall_subjectivity, sent_overall=overall_sentiment)
     return render_template('index.html')
 
 if __name__ == "__main__":
