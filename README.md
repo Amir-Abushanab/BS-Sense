@@ -1,2 +1,2 @@
 # BS-Sense
-A program that uses NLP to asses the subjectivity of social media content 🧐
+A flask app that uses NLP to asses the subjectivity of social media content 🧐
